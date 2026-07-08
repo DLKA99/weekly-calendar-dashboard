@@ -80,7 +80,7 @@
   }
   .field input:focus, .field select:focus, .field textarea:focus{outline:1px solid var(--accent);}
   .row2{display:flex;gap:10px;}
-  .row2 .field{flex:1;}
+  .row2 .field{flex:1;min-width:0;}
   .btn{
     width:100%;padding:12px;border:none;border-radius:7px;font-weight:700;
     font-size:14.5px;cursor:pointer;font-family:inherit;
@@ -89,6 +89,42 @@
   .btn-primary:hover{opacity:.9;}
   .btn-ghost{background:transparent;color:#aab2c0;border:1px solid #333d52;}
   .btn-ghost:hover{color:#fff;border-color:#4b5468;}
+  .mini-btn{
+    background:none;border:1px solid #333d52;color:#aab2c0;border-radius:6px;padding:7px 10px;
+    font-size:11.5px;cursor:pointer;font-family:inherit;white-space:nowrap;
+  }
+  .mini-btn:hover{color:#fff;border-color:#4b5468;}
+  .parse-row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:7px;}
+  .parse-hint{font-size:11px;color:#8892a3;line-height:1.4;}
+
+  /* ---------- date / time picker widgets ---------- */
+  .dp-wrap, .tp-wrap{position:relative;}
+  .dp-btn, .tp-btn{
+    width:100%; text-align:left; padding:10px 11px; border-radius:7px; font-family:inherit; font-size:14px;
+    cursor:pointer; border:1px solid var(--line); background:var(--paper-card); color:var(--ink-900);
+  }
+  .sidebar .dp-btn, .sidebar .tp-btn{background:#232c3e;color:#f2f0e8;border-color:#333d52;}
+  .dp-popup, .tp-popup{
+    position:absolute; top:calc(100% + 6px); left:0; z-index:80; background:var(--paper-card);
+    border:1px solid var(--line); border-radius:10px; box-shadow:0 10px 28px rgba(0,0,0,.18); padding:12px; width:230px;
+  }
+  .tp-popup{width:212px;}
+  .dp-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .dp-nav-btn{background:none;border:1px solid var(--line);border-radius:6px;width:24px;height:24px;cursor:pointer;color:var(--ink-700);font-size:13px;}
+  .dp-month{font-size:13px;font-weight:700;color:var(--ink-900);}
+  .dp-dow-row{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:10px;color:var(--ink-400);margin-bottom:4px;}
+  .dp-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+  .dp-day{text-align:center;font-size:12px;padding:6px 0;border-radius:6px;cursor:pointer;color:var(--ink-900);}
+  .dp-day:hover{background:var(--paper);}
+  .dp-day.dp-other{color:var(--ink-400);opacity:.5;}
+  .dp-day.dp-today{box-shadow:inset 0 0 0 1px var(--accent);}
+  .dp-day.dp-selected{background:var(--accent);color:#fff;}
+  .tp-row{display:flex;gap:6px;align-items:center;margin-bottom:10px;}
+  .tp-row select{flex:1;padding:7px 4px;border:1px solid var(--line);border-radius:6px;font-family:inherit;font-size:13px;color:var(--ink-900);background:#fff;min-width:0;}
+  .tp-popup .tp-btn-row{display:flex;gap:6px;}
+  .tp-popup .tp-btn-row button{flex:1;padding:8px;border:none;border-radius:6px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;}
+  .tp-confirm{background:var(--accent);color:#fff;}
+  .tp-clear{background:var(--paper);color:var(--ink-700);border:1px solid var(--line) !important;}
 
   /* ---------- Main ---------- */
   .main{flex:1;padding:44px 52px;overflow-y:auto;}
@@ -157,7 +193,7 @@
   .sched-item .info{flex:1;min-width:0;}
   .sched-item .info strong{display:block;font-size:14.5px;}
   .sched-item .info span{font-size:12px;color:var(--ink-400);}
-  .badge{padding:4px 10px;border-radius:20px;font-size:11.5px;font-weight:700;flex-shrink:0;}
+  .badge{padding:4px 10px;border-radius:20px;font-size:11.5px;font-weight:700;flex-shrink:0;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .icon-btn{
     background:none;border:1px solid var(--line);border-radius:6px;width:28px;height:28px;
     cursor:pointer;color:var(--ink-700);font-size:13px;flex-shrink:0;
@@ -165,14 +201,37 @@
   .icon-btn:hover{background:var(--paper);}
   .icon-btn.danger:hover{background:var(--study-soft);color:var(--study);border-color:var(--study);}
 
-  .edit-form{display:flex;gap:8px;flex:1;align-items:center;flex-wrap:wrap;}
-  .edit-form input, .edit-form select{
-    padding:7px 9px;border:1px solid var(--line);border-radius:6px;font-family:inherit;font-size:13px;
+  .edit-form{display:flex;gap:8px;flex:1;align-items:flex-start;flex-wrap:wrap;}
+  .edit-form input[type=text]{
+    padding:9px 10px;border:1px solid var(--line);border-radius:6px;font-family:inherit;font-size:13px;flex:2;min-width:130px;
   }
+  .edit-form .dp-wrap, .edit-form .tp-wrap{width:130px;}
+  .edit-form select{padding:9px 8px;border:1px solid var(--line);border-radius:6px;font-family:inherit;font-size:13px;}
+  .edit-form .ed-cat-custom{width:120px;}
+  .edit-actions{display:flex;gap:6px;margin-left:auto;}
 
   /* ---- list view ---- */
+  .week-strip-wrap{margin-bottom:18px;}
+  .week-nav{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+  .week-nav button.nav-arrow{background:var(--paper-card);border:1px solid var(--line);border-radius:7px;width:30px;height:30px;cursor:pointer;color:var(--ink-700);}
+  .week-nav .week-range-label{font-weight:700;font-size:14.5px;}
+  .week-nav .all-btn{width:auto;padding:8px 16px;font-size:13px;margin-left:auto;background:none;border:1px solid var(--line);border-radius:7px;cursor:pointer;color:var(--ink-700);}
+  .week-nav .all-btn.active-all{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .week-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;}
+  .week-day{background:var(--paper-card);border:1px solid var(--line);border-radius:8px;padding:12px 6px;
+    display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;position:relative;}
+  .week-day:hover{border-color:var(--accent);}
+  .week-day.is-today{box-shadow:inset 0 0 0 1px var(--accent);}
+  .week-day.is-selected{background:var(--accent);}
+  .week-day.is-selected .wd-label, .week-day.is-selected .wd-num{color:#fff;}
+  .wd-label{font-size:11px;color:var(--ink-400);}
+  .wd-num{font-size:16px;font-weight:700;}
+  .wd-count{position:absolute;top:5px;right:5px;background:var(--study);color:#fff;font-size:9px;
+    min-width:15px;height:15px;padding:0 3px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+  .week-day.is-selected .wd-count{background:#fff;color:var(--accent);}
+
   .list-filter{display:flex;gap:10px;margin-bottom:20px;align-items:center;flex-wrap:wrap;}
-  .list-filter select, .list-filter input{
+  .list-filter select{
     padding:9px 11px;border:1px solid var(--line);border-radius:7px;font-family:inherit;font-size:13.5px;
     background:var(--paper-card);
   }
@@ -204,19 +263,19 @@
     font-family:inherit;font-size:14px;background:var(--paper-card);}
   .memo-add button{background:var(--accent);color:#fff;border:none;border-radius:8px;
     padding:0 20px;font-weight:700;cursor:pointer;font-family:inherit;}
-  .memo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;}
+  .memo-grid{display:flex;flex-direction:column;gap:12px;}
   .memo-card{
-    background:var(--paper-card);border:1px solid var(--line);border-radius:10px;padding:16px;
-    display:flex;flex-direction:column;gap:10px;
+    background:var(--paper-card);border:1px solid var(--line);border-radius:10px;padding:16px 20px;
+    display:flex;flex-direction:row;align-items:center;gap:16px;
   }
   .memo-card.done{opacity:.5;}
-  .memo-card .m-text{font-size:14px;line-height:1.5;flex:1;word-break:break-word;}
+  .memo-card .m-text{font-size:14.5px;line-height:1.5;flex:1;word-break:break-word;}
   .memo-card.done .m-text{text-decoration:line-through;}
-  .memo-card .m-foot{display:flex;justify-content:space-between;align-items:center;}
-  .memo-card .m-date{font-size:11px;color:var(--ink-400);}
+  .memo-card .m-foot{display:flex;align-items:center;gap:16px;flex-shrink:0;}
+  .memo-card .m-date{font-size:11.5px;color:var(--ink-400);white-space:nowrap;}
   .memo-card .m-actions{display:flex;gap:6px;}
   .check-btn{
-    width:22px;height:22px;border-radius:5px;border:1.5px solid var(--line);background:none;cursor:pointer;
+    width:24px;height:24px;border-radius:5px;border:1.5px solid var(--line);background:none;cursor:pointer;
     color:var(--accent);font-size:12px;flex-shrink:0;
   }
   .memo-card.done .check-btn{background:var(--accent);border-color:var(--accent);color:#fff;}
@@ -241,26 +300,34 @@
     <h3>일정 추가</h3>
     <div class="field">
       <label for="in-title">일정 제목</label>
-      <input type="text" id="in-title" placeholder="예: 파이썬 과제 제출">
+      <input type="text" id="in-title" placeholder="예: 7월 22일 물리 수행" onkeydown="if(event.key==='Enter'){event.preventDefault(); autoParseTitle();}">
+      <div class="parse-row">
+        <button type="button" class="mini-btn" onclick="autoParseTitle()">📅 날짜·시간 자동 인식</button>
+        <span class="parse-hint" id="parse-hint"></span>
+      </div>
     </div>
     <div class="row2">
       <div class="field">
-        <label for="in-date">날짜</label>
-        <input type="date" id="in-date">
+        <label>날짜</label>
+        <div class="dp-wrap" id="in-date-wrap"></div>
       </div>
       <div class="field">
-        <label for="in-time">시간</label>
-        <input type="time" id="in-time">
+        <label>시간</label>
+        <div class="tp-wrap" id="in-time-wrap"></div>
       </div>
     </div>
     <div class="field">
       <label for="in-cat">카테고리</label>
-      <select id="in-cat">
+      <select id="in-cat" onchange="toggleCustomCat('in')">
         <option value="study">학업</option>
         <option value="club">동아리</option>
         <option value="personal">개인</option>
         <option value="other">기타</option>
       </select>
+    </div>
+    <div class="field" id="in-cat-custom-wrap" style="display:none;">
+      <label for="in-cat-custom">카테고리 이름 직접 입력</label>
+      <input type="text" id="in-cat-custom" placeholder="예: 알바, 운동">
     </div>
     <button class="btn btn-primary" onclick="addSchedule()">추가하기</button>
   </div>
@@ -269,8 +336,8 @@
   <div class="panel" id="diary-panel" style="display:none;">
     <h3>일기 날짜</h3>
     <div class="field">
-      <label for="diary-date-input">날짜 선택</label>
-      <input type="date" id="diary-date-input" onchange="jumpToDiaryDate(this.value)">
+      <label>날짜 선택</label>
+      <div class="dp-wrap" id="diary-date-wrap"></div>
     </div>
     <button class="btn btn-ghost" onclick="setDiaryDate(todayStr())">오늘로 이동</button>
   </div>
@@ -311,8 +378,16 @@
 
   <!-- LIST VIEW -->
   <div class="view" id="view-list">
+    <div class="week-strip-wrap">
+      <div class="week-nav">
+        <button class="nav-arrow" onclick="shiftListWeek(-1)">‹</button>
+        <span class="week-range-label" id="week-range-label">-</span>
+        <button class="nav-arrow" onclick="shiftListWeek(1)">›</button>
+        <button class="all-btn" id="all-btn" onclick="selectListDate(null)">전체 보기</button>
+      </div>
+      <div class="week-strip" id="week-strip"></div>
+    </div>
     <div class="list-filter">
-      <select id="filter-date"><option value="">전체 날짜</option></select>
       <select id="filter-cat">
         <option value="">전체 카테고리</option>
         <option value="study">학업</option>
@@ -358,13 +433,14 @@ let memos = [];
 let calYear, calMonth; // 0-indexed month
 let selectedCalDate = null;
 let diaryDate = null;
-let diaryDirty = false;
 let currentTab = 'calendar';
+let listWeekStart = null;   // Date, Sunday of displayed week (list tab)
+let listSelectedDate = null; // string or null (전체 보기)
 
 const CAT_LABEL = {study:'학업', club:'동아리', personal:'개인', other:'기타'};
 
-function todayStr(){
-  const d = new Date();
+function todayStr(){ return toDateStr(new Date()); }
+function toDateStr(d){
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
 function fmtDateKor(dstr){
@@ -373,7 +449,17 @@ function fmtDateKor(dstr){
   const dt = new Date(y,m-1,d);
   return `${y}년 ${m}월 ${d}일 (${days[dt.getDay()]})`;
 }
+function fmtShort(d){ return `${d.getMonth()+1}.${d.getDate()}`; }
 function uid(){ return 'id_'+Date.now()+'_'+Math.random().toString(36).slice(2,8); }
+function catLabel(item){
+  return (item.category==='other' && item.customLabel) ? item.customLabel : CAT_LABEL[item.category];
+}
+function escapeHtml(str){
+  const d = document.createElement('div'); d.innerText = str; return d.innerHTML;
+}
+function getWeekSunday(date){
+  const d = new Date(date); d.setHours(0,0,0,0); d.setDate(d.getDate()-d.getDay()); return d;
+}
 
 /* ---------------- storage ---------------- */
 async function loadSchedules(){
@@ -407,20 +493,279 @@ async function persistDiary(dateStr, text){
   catch(e){ console.error('save failed', e); }
 }
 
+/* ---------------- date / time picker widgets ---------------- */
+function closeAllPickerPopups(){
+  document.querySelectorAll('.dp-popup, .tp-popup').forEach(p=>p.style.display='none');
+}
+document.addEventListener('click', closeAllPickerPopups);
+
+function createDatePicker(initialDate){
+  const wrap = document.createElement('div');
+  wrap.className = 'dp-wrap';
+  const btn = document.createElement('button');
+  btn.type = 'button'; btn.className = 'dp-btn';
+  const popup = document.createElement('div');
+  popup.className = 'dp-popup'; popup.style.display = 'none';
+  wrap.appendChild(btn); wrap.appendChild(popup);
+
+  let value = initialDate || '';
+  let viewDate = new Date((value || todayStr())+'T00:00:00');
+
+  function fmtBtn(v){
+    if(!v) return '날짜 선택';
+    const [y,m,d] = v.split('-').map(Number);
+    return `${y}.${String(m).padStart(2,'0')}.${String(d).padStart(2,'0')}`;
+  }
+
+  function renderPopup(){
+    const y = viewDate.getFullYear(), m = viewDate.getMonth();
+    const first = new Date(y,m,1);
+    const startOffset = first.getDay();
+    const gridStart = new Date(y,m,1-startOffset);
+    let daysHtml = '';
+    for(let i=0;i<42;i++){
+      const d = new Date(gridStart); d.setDate(gridStart.getDate()+i);
+      const dstr = toDateStr(d);
+      const cls = ['dp-day'];
+      if(d.getMonth()!==m) cls.push('dp-other');
+      if(dstr===value) cls.push('dp-selected');
+      if(dstr===todayStr()) cls.push('dp-today');
+      daysHtml += `<div class="${cls.join(' ')}" data-date="${dstr}">${d.getDate()}</div>`;
+    }
+    popup.innerHTML = `
+      <div class="dp-nav">
+        <button type="button" class="dp-nav-btn" data-act="prev">‹</button>
+        <span class="dp-month">${y}년 ${m+1}월</span>
+        <button type="button" class="dp-nav-btn" data-act="next">›</button>
+      </div>
+      <div class="dp-dow-row">${['일','월','화','수','목','금','토'].map(d=>`<span>${d}</span>`).join('')}</div>
+      <div class="dp-days">${daysHtml}</div>
+    `;
+    popup.querySelector('[data-act="prev"]').onclick = (e)=>{ e.stopPropagation(); viewDate.setMonth(viewDate.getMonth()-1); renderPopup(); };
+    popup.querySelector('[data-act="next"]').onclick = (e)=>{ e.stopPropagation(); viewDate.setMonth(viewDate.getMonth()+1); renderPopup(); };
+    popup.querySelectorAll('.dp-day').forEach(el=>{
+      el.onclick = (e)=>{
+        e.stopPropagation();
+        value = el.dataset.date;
+        btn.innerText = fmtBtn(value);
+        popup.style.display='none';
+      };
+    });
+  }
+
+  btn.innerText = fmtBtn(value);
+  btn.onclick = (e)=>{
+    e.stopPropagation();
+    const willOpen = popup.style.display!=='block';
+    closeAllPickerPopups();
+    if(willOpen){ renderPopup(); popup.style.display='block'; }
+  };
+
+  return {
+    element: wrap,
+    getValue: ()=>value,
+    setValue: (v)=>{ value=v; viewDate = new Date((v||todayStr())+'T00:00:00'); btn.innerText = fmtBtn(value); }
+  };
+}
+
+function createTimePicker(initialTime){
+  const wrap = document.createElement('div');
+  wrap.className = 'tp-wrap';
+  const btn = document.createElement('button');
+  btn.type = 'button'; btn.className = 'tp-btn';
+  const popup = document.createElement('div');
+  popup.className = 'tp-popup'; popup.style.display='none';
+  wrap.appendChild(btn); wrap.appendChild(popup);
+
+  let value = initialTime || '';
+
+  function fmtBtn(v){
+    if(!v) return '시간 선택 (선택안함)';
+    let [h,m] = v.split(':').map(Number);
+    const ampm = h<12 ? '오전' : '오후';
+    let h12 = h%12; if(h12===0) h12=12;
+    return `${ampm} ${h12}:${String(m).padStart(2,'0')}`;
+  }
+
+  function renderPopup(){
+    let h=9, m=0, ampm='오전';
+    if(value){
+      let [hh,mm] = value.split(':').map(Number);
+      ampm = hh<12 ? '오전':'오후';
+      h = hh%12; if(h===0) h=12;
+      m = mm;
+    }
+    const hourOpts = Array.from({length:12},(_,i)=>i+1).map(v=>`<option value="${v}" ${v===h?'selected':''}>${v}시</option>`).join('');
+    const minOpts = [0,5,10,15,20,25,30,35,40,45,50,55].map(v=>`<option value="${v}" ${v===m?'selected':''}>${String(v).padStart(2,'0')}분</option>`).join('');
+    popup.innerHTML = `
+      <div class="tp-row">
+        <select class="tp-ampm">
+          <option value="오전" ${ampm==='오전'?'selected':''}>오전</option>
+          <option value="오후" ${ampm==='오후'?'selected':''}>오후</option>
+        </select>
+        <select class="tp-hour">${hourOpts}</select>
+        <select class="tp-min">${minOpts}</select>
+      </div>
+      <div class="tp-btn-row">
+        <button type="button" class="tp-clear">선택 안함</button>
+        <button type="button" class="tp-confirm">확인</button>
+      </div>
+    `;
+    popup.querySelector('.tp-confirm').onclick = (e)=>{
+      e.stopPropagation();
+      const ap = popup.querySelector('.tp-ampm').value;
+      let hh = parseInt(popup.querySelector('.tp-hour').value,10);
+      const mm = parseInt(popup.querySelector('.tp-min').value,10);
+      if(ap==='오전'){ if(hh===12) hh=0; } else { if(hh!==12) hh+=12; }
+      value = String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0');
+      btn.innerText = fmtBtn(value);
+      popup.style.display='none';
+    };
+    popup.querySelector('.tp-clear').onclick = (e)=>{
+      e.stopPropagation();
+      value='';
+      btn.innerText = fmtBtn(value);
+      popup.style.display='none';
+    };
+  }
+
+  btn.innerText = fmtBtn(value);
+  btn.onclick = (e)=>{
+    e.stopPropagation();
+    const willOpen = popup.style.display!=='block';
+    closeAllPickerPopups();
+    if(willOpen){ renderPopup(); popup.style.display='block'; }
+  };
+
+  return {
+    element: wrap,
+    getValue: ()=>value,
+    setValue: (v)=>{ value=v; btn.innerText = fmtBtn(value); }
+  };
+}
+
+/* add-form pickers (mounted once) */
+let addDatePicker, addTimePicker;
+
+/* ---------------- rule-based natural language parser ----------------
+   "7월 22일 물리 수행" -> { date:'2026-07-22', time:null, title:'물리 수행' }
+   "7월22일 오후 3시 동아리 회의" -> { date:'2026-07-22', time:'15:00', title:'동아리 회의' }
+------------------------------------------------------------------- */
+function parseScheduleInput(rawText){
+  let text = rawText;
+  let year = null, month = null, day = null, hour = null, minute = null;
+
+  // 1) explicit year: "2026년"
+  const yearMatch = text.match(/(\d{4})\s*년/);
+  if(yearMatch){
+    year = parseInt(yearMatch[1], 10);
+    text = text.replace(yearMatch[0], ' ');
+  }
+
+  // 2) month + day: "7월 22일", "7월22일"
+  const mdMatch = text.match(/(\d{1,2})\s*월\s*(\d{1,2})\s*일/);
+  if(mdMatch){
+    month = parseInt(mdMatch[1], 10);
+    day = parseInt(mdMatch[2], 10);
+    text = text.replace(mdMatch[0], ' ');
+  }
+
+  // 3) time: "오후 3시", "오전 9시 30분", "3시"
+  const timeMatch = text.match(/(오전|오후)?\s*(\d{1,2})\s*시(?:\s*(\d{1,2})\s*분)?/);
+  if(timeMatch && (timeMatch[1] || month || day)){
+    const ampm = timeMatch[1];
+    let hh = parseInt(timeMatch[2], 10);
+    const mm = timeMatch[3] ? parseInt(timeMatch[3], 10) : 0;
+    if(ampm === '오후'){ if(hh !== 12) hh += 12; }
+    else if(ampm === '오전'){ if(hh === 12) hh = 0; }
+    if(hh > 23) hh = hh % 24;
+    hour = hh; minute = mm;
+    text = text.replace(timeMatch[0], ' ');
+  }
+
+  // 4) clean up leftover particles / punctuation / extra spaces
+  text = text.replace(/[,·]/g, ' ');
+  text = text.replace(/\s*(에|까지|경)\s*/g, ' ');
+  text = text.replace(/\s{2,}/g, ' ').trim();
+
+  let dateStr = null;
+  if(month && day){
+    const y = year || new Date().getFullYear();
+    const mm = String(month).padStart(2,'0');
+    const dd = String(day).padStart(2,'0');
+    dateStr = `${y}-${mm}-${dd}`;
+  }
+  let timeStr = null;
+  if(hour !== null){
+    timeStr = String(hour).padStart(2,'0')+':'+String(minute).padStart(2,'0');
+  }
+
+  return { date: dateStr, time: timeStr, title: text };
+}
+
+function autoParseTitle(){
+  const input = document.getElementById('in-title');
+  const result = parseScheduleInput(input.value);
+  const hint = document.getElementById('parse-hint');
+
+  if(result.date) addDatePicker.setValue(result.date);
+  if(result.time) addTimePicker.setValue(result.time);
+  if(result.title) input.value = result.title;
+
+  if(!hint) return;
+  if(result.date || result.time){
+    const parts = [];
+    if(result.date) parts.push('날짜 인식');
+    if(result.time) parts.push('시간 인식');
+    hint.innerText = parts.join(' · ') + ' 완료';
+    hint.style.color = 'var(--accent)';
+  } else {
+    hint.innerText = '예: "7월 22일 물리 수행"';
+    hint.style.color = '#8892a3';
+  }
+}
+
+function toggleCustomCat(prefix){
+  const sel = document.getElementById(prefix+'-cat');
+  const wrap = document.getElementById(prefix+'-cat-custom-wrap');
+  if(!sel || !wrap) return;
+  wrap.style.display = sel.value === 'other' ? 'block' : 'none';
+}
+
 /* ---------------- init ---------------- */
 window.onload = async function(){
   document.getElementById('today-display').innerText = fmtDateKor(todayStr());
-  document.getElementById('in-date').value = todayStr();
+
   const now = new Date();
   calYear = now.getFullYear(); calMonth = now.getMonth();
   selectedCalDate = todayStr();
   diaryDate = todayStr();
+  listWeekStart = getWeekSunday(now);
+  listSelectedDate = null;
+
+  addDatePicker = createDatePicker(todayStr());
+  document.getElementById('in-date-wrap').appendChild(addDatePicker.element);
+  addTimePicker = createTimePicker('');
+  document.getElementById('in-time-wrap').appendChild(addTimePicker.element);
+
+  const diaryDatePicker = createDatePicker(diaryDate);
+  document.getElementById('diary-date-wrap').appendChild(diaryDatePicker.element);
+  window._diaryDatePicker = diaryDatePicker;
+  const origSetValue = diaryDatePicker.setValue;
+  diaryDatePicker.element.addEventListener('click', ()=>{
+    // after popup selection changes, sync diaryDate
+    setTimeout(()=>{
+      const v = diaryDatePicker.getValue();
+      if(v && v!==diaryDate){ diaryDate = v; loadAndShowDiary(); }
+    }, 0);
+  });
 
   await loadSchedules();
   await loadMemos();
 
   renderStats();
   renderCalendar();
+  renderWeekStrip();
   renderList();
   renderMemos();
   await loadAndShowDiary();
@@ -428,10 +773,8 @@ window.onload = async function(){
   document.querySelectorAll('.tab-btn').forEach(btn=>{
     btn.addEventListener('click', ()=>switchTab(btn.dataset.tab));
   });
-  document.getElementById('filter-date').addEventListener('change', renderList);
   document.getElementById('filter-cat').addEventListener('change', renderList);
   document.getElementById('diary-text').addEventListener('input', ()=>{
-    diaryDirty = true;
     document.getElementById('diary-status').innerText = '저장되지 않은 변경사항';
   });
 };
@@ -453,7 +796,7 @@ function switchTab(tab){
   document.getElementById('view-title').innerText = titles[tab];
   document.getElementById('view-sub').innerText = subs[tab];
 
-  if(tab==='list') renderList();
+  if(tab==='list'){ renderWeekStrip(); renderList(); }
   if(tab==='memo') renderMemos();
 }
 
@@ -464,11 +807,11 @@ function renderStats(){
   document.getElementById('today-count').innerText = schedules.filter(s=>s.date===t).length+'개';
 
   const now = new Date();
-  const sunday = new Date(now); sunday.setDate(now.getDate()-now.getDay());
+  const sunday = getWeekSunday(now);
   const saturday = new Date(sunday); saturday.setDate(sunday.getDate()+6);
   const inWeek = schedules.filter(s=>{
     const d = new Date(s.date+'T00:00:00');
-    return d>=new Date(sunday.toDateString()) && d<=new Date(saturday.toDateString());
+    return d>=sunday && d<=saturday;
   });
   document.getElementById('week-count').innerText = inWeek.length+'개';
 }
@@ -476,26 +819,32 @@ function renderStats(){
 /* ---------------- add schedule ---------------- */
 async function addSchedule(){
   const title = document.getElementById('in-title').value.trim();
-  const date = document.getElementById('in-date').value;
-  const time = document.getElementById('in-time').value;
+  const date = addDatePicker.getValue();
+  const time = addTimePicker.getValue();
   const cat = document.getElementById('in-cat').value;
+  let customLabel = '';
+  if(cat==='other'){
+    customLabel = document.getElementById('in-cat-custom').value.trim();
+    if(!customLabel){ alert('카테고리 이름을 입력해주세요.'); return; }
+  }
   if(!title || !date){ alert('제목과 날짜는 필수예요.'); return; }
 
-  schedules.push({id:uid(), title, date, time, category:cat});
+  schedules.push({id:uid(), title, date, time, category:cat, customLabel});
   schedules.sort((a,b)=> (a.date+((a.time)||'99:99')).localeCompare(b.date+((b.time)||'99:99')));
   await persistSchedules();
 
   document.getElementById('in-title').value='';
-  document.getElementById('in-time').value='';
+  addTimePicker.setValue('');
+  document.getElementById('in-cat-custom').value='';
 
-  renderStats(); renderCalendar(); renderList();
+  renderStats(); renderCalendar(); renderWeekStrip(); renderList();
 }
 
 async function deleteSchedule(id){
   if(!confirm('이 일정을 삭제할까요?')) return;
   schedules = schedules.filter(s=>s.id!==id);
   await persistSchedules();
-  renderStats(); renderCalendar(); renderList();
+  renderStats(); renderCalendar(); renderWeekStrip(); renderList();
 }
 
 async function updateSchedule(id, newData){
@@ -504,7 +853,7 @@ async function updateSchedule(id, newData){
   schedules[idx] = {...schedules[idx], ...newData};
   schedules.sort((a,b)=> (a.date+((a.time)||'99:99')).localeCompare(b.date+((b.time)||'99:99')));
   await persistSchedules();
-  renderStats(); renderCalendar(); renderList();
+  renderStats(); renderCalendar(); renderWeekStrip(); renderList();
 }
 
 /* ---------------- render a schedule item (list or day-detail) ---------------- */
@@ -516,15 +865,11 @@ function scheduleItemHtml(item, editable=true){
         <strong>${escapeHtml(item.title)}</strong>
         <span>${item.date}${item.time ? ' · '+item.time : ''}</span>
       </div>
-      <span class="badge ${item.category}">${CAT_LABEL[item.category]}</span>
+      <span class="badge ${item.category}" title="${escapeHtml(catLabel(item))}">${escapeHtml(catLabel(item))}</span>
       ${editable ? `
       <button class="icon-btn" title="수정" onclick="startEdit('${item.id}', this)">✎</button>
       <button class="icon-btn danger" title="삭제" onclick="deleteSchedule('${item.id}')">✕</button>` : ''}
     </div>`;
-}
-
-function escapeHtml(str){
-  const d = document.createElement('div'); d.innerText = str; return d.innerHTML;
 }
 
 function startEdit(id, btn){
@@ -533,27 +878,54 @@ function startEdit(id, btn){
   const container = btn.closest('.sched-item');
   container.innerHTML = `
     <div class="edit-form">
-      <input type="text" id="ed-title-${id}" value="${escapeHtml(item.title)}" style="flex:2;min-width:120px;">
-      <input type="date" id="ed-date-${id}" value="${item.date}">
-      <input type="time" id="ed-time-${id}" value="${item.time||''}">
+      <input type="text" id="ed-title-${id}" value="${escapeHtml(item.title)}">
+      <div class="dp-wrap" id="ed-date-wrap-${id}"></div>
+      <div class="tp-wrap" id="ed-time-wrap-${id}"></div>
       <select id="ed-cat-${id}">
         <option value="study" ${item.category==='study'?'selected':''}>학업</option>
         <option value="club" ${item.category==='club'?'selected':''}>동아리</option>
         <option value="personal" ${item.category==='personal'?'selected':''}>개인</option>
         <option value="other" ${item.category==='other'?'selected':''}>기타</option>
       </select>
-      <button class="icon-btn" title="저장" onclick="commitEdit('${id}')">✓</button>
-      <button class="icon-btn" title="취소" onclick="renderList();renderDayDetail();">×</button>
+      <input type="text" class="ed-cat-custom" id="ed-cat-custom-${id}" placeholder="카테고리 이름"
+        value="${escapeHtml(item.customLabel||'')}" style="display:${item.category==='other'?'inline-block':'none'};">
+      <div class="edit-actions">
+        <button class="icon-btn" title="저장" onclick="commitEdit('${id}')">✓</button>
+        <button class="icon-btn" title="취소" onclick="cancelEdit()">×</button>
+      </div>
     </div>`;
+
+  const dp = createDatePicker(item.date);
+  document.getElementById('ed-date-wrap-'+id).appendChild(dp.element);
+  const tp = createTimePicker(item.time||'');
+  document.getElementById('ed-time-wrap-'+id).appendChild(tp.element);
+  window._editPickers = window._editPickers || {};
+  window._editPickers[id] = {date: dp, time: tp};
+
+  document.getElementById('ed-cat-'+id).onchange = function(){
+    document.getElementById('ed-cat-custom-'+id).style.display = this.value==='other' ? 'inline-block' : 'none';
+  };
+}
+
+function cancelEdit(){
+  renderList();
+  renderDayDetail();
 }
 
 async function commitEdit(id){
   const title = document.getElementById('ed-title-'+id).value.trim();
-  const date = document.getElementById('ed-date-'+id).value;
-  const time = document.getElementById('ed-time-'+id).value;
+  const pickers = (window._editPickers||{})[id];
+  const date = pickers ? pickers.date.getValue() : '';
+  const time = pickers ? pickers.time.getValue() : '';
   const category = document.getElementById('ed-cat-'+id).value;
+  let customLabel = '';
+  if(category==='other'){
+    customLabel = document.getElementById('ed-cat-custom-'+id).value.trim();
+    if(!customLabel){ alert('카테고리 이름을 입력해주세요.'); return; }
+  }
   if(!title || !date){ alert('제목과 날짜는 필수예요.'); return; }
-  await updateSchedule(id, {title, date, time, category});
+  await updateSchedule(id, {title, date, time, category, customLabel});
+  if(window._editPickers) delete window._editPickers[id];
   renderDayDetail();
 }
 
@@ -589,7 +961,7 @@ function renderCalendar(){
   for(let i=0;i<42;i++){
     const d = new Date(gridStart);
     d.setDate(gridStart.getDate()+i);
-    const dstr = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    const dstr = toDateStr(d);
     const cell = document.createElement('div');
     cell.className = 'cal-cell';
     if(d.getMonth()!==calMonth) cell.classList.add('other-month');
@@ -621,28 +993,53 @@ function renderDayDetail(){
   }
 }
 
-/* ---------------- list view ---------------- */
-function populateDateFilterOptions(){
-  const sel = document.getElementById('filter-date');
-  const current = sel.value;
-  const dates = [...new Set(schedules.map(s=>s.date))].sort();
-  sel.innerHTML = '<option value="">전체 날짜</option>' + dates.map(d=>`<option value="${d}">${d}</option>`).join('');
-  sel.value = dates.includes(current) ? current : '';
+/* ---------------- list view : week strip + filters ---------------- */
+function shiftListWeek(delta){
+  listWeekStart.setDate(listWeekStart.getDate()+7*delta);
+  renderWeekStrip();
+}
+function selectListDate(dstr){
+  listSelectedDate = dstr;
+  renderWeekStrip();
+  renderList();
+}
+function renderWeekStrip(){
+  const strip = document.getElementById('week-strip');
+  if(!strip) return;
+  const dowNames = ['일','월','화','수','목','금','토'];
+  const t = todayStr();
+  let html = '';
+  for(let i=0;i<7;i++){
+    const d = new Date(listWeekStart); d.setDate(listWeekStart.getDate()+i);
+    const dstr = toDateStr(d);
+    const count = schedules.filter(s=>s.date===dstr).length;
+    const cls = ['week-day'];
+    if(dstr===t) cls.push('is-today');
+    if(dstr===listSelectedDate) cls.push('is-selected');
+    html += `<div class="${cls.join(' ')}" onclick="selectListDate('${dstr}')">
+      <span class="wd-label">${dowNames[i]}</span>
+      <span class="wd-num num">${d.getDate()}</span>
+      ${count>0 ? `<span class="wd-count">${count}</span>` : ''}
+    </div>`;
+  }
+  strip.innerHTML = html;
+  const endDate = new Date(listWeekStart); endDate.setDate(listWeekStart.getDate()+6);
+  document.getElementById('week-range-label').innerText = `${fmtShort(listWeekStart)} - ${fmtShort(endDate)}`;
+  document.getElementById('all-btn').classList.toggle('active-all', listSelectedDate===null);
 }
 
 function clearFilters(){
-  document.getElementById('filter-date').value='';
+  listSelectedDate = null;
   document.getElementById('filter-cat').value='';
+  renderWeekStrip();
   renderList();
 }
 
 function renderList(){
-  populateDateFilterOptions();
-  const dateFilter = document.getElementById('filter-date').value;
   const catFilter = document.getElementById('filter-cat').value;
 
   let filtered = schedules.filter(s=>
-    (!dateFilter || s.date===dateFilter) && (!catFilter || s.category===catFilter)
+    (!listSelectedDate || s.date===listSelectedDate) && (!catFilter || s.category===catFilter)
   );
 
   const container = document.getElementById('list-container');
@@ -666,28 +1063,25 @@ function renderList(){
 /* ---------------- diary ---------------- */
 function setDiaryDate(dstr){
   diaryDate = dstr;
-  document.getElementById('diary-date-input').value = dstr;
+  if(window._diaryDatePicker) window._diaryDatePicker.setValue(dstr);
   loadAndShowDiary();
 }
-function jumpToDiaryDate(dstr){ if(dstr) setDiaryDate(dstr); }
 function shiftDiaryDay(delta){
   const d = new Date(diaryDate+'T00:00:00');
   d.setDate(d.getDate()+delta);
-  setDiaryDate(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'));
+  setDiaryDate(toDateStr(d));
 }
 async function loadAndShowDiary(){
   document.getElementById('diary-date-label').innerText = fmtDateKor(diaryDate);
-  document.getElementById('diary-date-input').value = diaryDate;
+  if(window._diaryDatePicker) window._diaryDatePicker.setValue(diaryDate);
   document.getElementById('diary-status').innerText = '불러오는 중...';
   const text = await loadDiary(diaryDate);
   document.getElementById('diary-text').value = text;
-  diaryDirty = false;
   document.getElementById('diary-status').innerText = text ? '저장됨' : '작성된 일기가 없어요';
 }
 async function saveDiary(){
   const text = document.getElementById('diary-text').value;
   await persistDiary(diaryDate, text);
-  diaryDirty = false;
   document.getElementById('diary-status').innerText = '저장됨';
 }
 
@@ -721,11 +1115,11 @@ function renderMemos(){
   }
   grid.innerHTML = memos.map(m=>`
     <div class="memo-card ${m.done?'done':''}">
+      <button class="check-btn" title="완료 표시" onclick="toggleMemo('${m.id}')">${m.done?'✓':''}</button>
       <div class="m-text">${escapeHtml(m.text)}</div>
       <div class="m-foot">
         <span class="m-date">${m.createdAt}</span>
         <div class="m-actions">
-          <button class="check-btn" title="완료 표시" onclick="toggleMemo('${m.id}')">${m.done?'✓':''}</button>
           <button class="icon-btn danger" title="삭제" onclick="deleteMemo('${m.id}')">✕</button>
         </div>
       </div>
